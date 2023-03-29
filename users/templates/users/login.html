@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+  <title>Tradeaux group authentification</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <style>
+     .centered-form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    /* Set the width of the form container */
+    .form-container {
+      width: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 centered-form">
+       <div class="card">
+        <div class="card-body">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if not request.user.is_superuser %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <form action="" method="post" class="text-center">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend claass="border-bottom mb-4">Login</legend>
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-info" type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+       </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

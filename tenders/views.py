@@ -81,7 +81,7 @@ def initiate_payment(request):
             'PartyA': phone_number,
             'PartyB': 174379,
             'PhoneNumber': phone_number,
-            'CallBackURL': 'https://2570-197-232-61-204.in.ngrok.io/tenders/payment_push/',
+            'CallBackURL': 'http://soft01.kenyaweb.com/tenders/payment_push/',
             'AccountReference': 'conference',
             'TransactionDesc': 'ticket',
         }

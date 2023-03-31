@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-=$iq_s#(@nhqw-1l7qz_*2tgacpvcwrw6id77g@^_j5p$6(97y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://soft01.kenyaweb.com/']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -127,6 +127,9 @@ environ.Env.read_env()
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

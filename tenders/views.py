@@ -109,23 +109,20 @@ def payment_push(request):
         response_data = request.POST
         print(response_data)
 
+        # Check if payment was successful
+        result_code = response_data.get('ResultCode', None)
+        result_desc = response_data.get('ResultDesc', None)
+
+        if result_code == '0':
+            # Payment was successful, do something
+            transaction_id = response_data.get('TransID', None)
+            amount = response_data.get('TransAmount', None)
+            phone_number = response_data.get('MSISDN', None)
+            transaction_time = response_data.get('TransTime', None)
+            # ...
+        else:
+            # Payment was not successful, handle error
+            error_message = f"Payment failed with ResultCode: {result_code}, ResultDesc: {result_desc}"
+            # ...
+
     return render(request, 'tenders/payment_push.html')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        # Retrieve the Tenders object for the current view
-        tender = self.get_object()
-
-        # Retrieve the path to the PDF file
-        pdf_path = tender.tender_file.path
-
-        # Open the PDF file as a binary file
-        with open(pdf_path, 'rb') as pdf_file:
-            # Read the contents of the file
-            pdf_content = pdf_file.read()
-
-        # Add the PDF content to the context
-        context['pdf_content'] = pdf_content
-
-        return context

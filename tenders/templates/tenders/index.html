@@ -70,7 +70,7 @@
                     <h5 class="card-title display-5 fw-normal">{{ tender.tender_name }}</h5>
                   <p class="card-text fs-5">{{ tender.description|truncatewords_html:50 }}</p>
                   {% if tender.description|wordcount > 15 %}
-                    <a href="{% url 'tender_details' tender.id %}" class="btn btn-primary read-more">Read More..</a>
+                    <a href="{% url 'tenders:tender_details' tender.id %}" class="btn btn-primary read-more">Read More..</a>
                     <hr>
                   {% endif %}
                 </div>
@@ -78,7 +78,7 @@
             </div>
           {% empty %}
             <div class="col-md-12">
-              <p>No tenders found.</p>
+              <p>No tenders found..</p>
             </div>
           {% endfor %}
         </div>

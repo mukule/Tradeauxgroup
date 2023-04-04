@@ -5,8 +5,10 @@ from .views import index, tender_details
 from django.conf import settings
 from django.conf.urls.static import static
 
+
+app_name = 'tenders'
 urlpatterns = [
-    path('tenders/', index.as_view(), name='index'),
+    path('', index.as_view(), name='index'),
     path('<int:pk>', tender_details.as_view(), name='tender_details'),
     path('initiate_payment', views.initiate_payment, name='initiate_payment'),
     path('payment_push', views.payment_push, name='payment_push'),

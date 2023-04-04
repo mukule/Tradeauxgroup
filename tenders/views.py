@@ -17,6 +17,7 @@ from django.shortcuts import render, redirect
 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 shortcode = 174379
 import base64
+from django.urls import reverse
 
 
 
@@ -58,7 +59,13 @@ def initiate_payment(request):
 
         response_json = response.json()
         access_token = response_json["access_token"]
+        print(access_token)
+        host = request.get_host()
 
+        callback_url = 'http://{}{}'.format(host,
+                                           reverse('tenders:payment_push')),
+        print(callback_url)
+        
 
         # Make M-Pesa payment request
         passkey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
@@ -81,12 +88,15 @@ def initiate_payment(request):
             'PartyA': phone_number,
             'PartyB': 174379,
             'PhoneNumber': phone_number,
-            'CallBackURL': 'http://soft01.kenyaweb.com/tenders/payment_push/',
+            'CallBackURL': callback_url,
+            
             'AccountReference': 'conference',
             'TransactionDesc': 'ticket',
         }
 
         response = requests.post(url, headers=headers, json=payload)
+        
+
       
        # Check payment status and redirect to appropriate view
        # Check payment status and redirect to appropriate view
@@ -94,7 +104,7 @@ def initiate_payment(request):
             response_json = response.json()
             print(response_json)
             if response_json["ResponseCode"] == "0":
-                return redirect('payment_push')
+                return redirect('tenders:payment_push')
             else:
                 return redirect('payment_fail')
         else:
@@ -108,21 +118,5 @@ def payment_push(request):
         # Process the response data
         response_data = request.POST
         print(response_data)
-
-        # Check if payment was successful
-        result_code = response_data.get('ResultCode', None)
-        result_desc = response_data.get('ResultDesc', None)
-
-        if result_code == '0':
-            # Payment was successful, do something
-            transaction_id = response_data.get('TransID', None)
-            amount = response_data.get('TransAmount', None)
-            phone_number = response_data.get('MSISDN', None)
-            transaction_time = response_data.get('TransTime', None)
             # ...
-        else:
-            # Payment was not successful, handle error
-            error_message = f"Payment failed with ResultCode: {result_code}, ResultDesc: {result_desc}"
-            # ...
-
     return render(request, 'tenders/payment_push.html')

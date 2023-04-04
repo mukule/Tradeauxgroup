@@ -18,7 +18,7 @@ def register(request):
         form = UserRegisterForm
     return render(request, 'users/register.html', {'form':form})
 
-def index(request):
-    user = request.user
-    context = {'user': user}
-    return render(request, 'users/index.html', context)
+# def index(request):
+#     user = request.user
+#     context = {'user': user}
+#     return render(request, 'users/index.html', context)

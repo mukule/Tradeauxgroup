@@ -63,7 +63,7 @@ def initiate_payment(request):
         print(access_token)
         host = request.get_host()
 
-        callback_url = 'http://soft01.kenyaweb.com'
+        callback_url = 'http://soft01.kenyaweb.com/tenders/payment_push'
 
         print(callback_url)
         

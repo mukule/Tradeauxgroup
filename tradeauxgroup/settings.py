@@ -144,4 +144,60 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 consumer_key = "piumJBdCtSxo6GX9p8j8kqcljVJNXJMA"
 consumer_secret = "pd7cx9QgbZReJdZ1"
 
-
+LOGGING = {
+		'version': 1,
+		'disable_existing_loggers': False,
+		'formatters': {
+			'verbose': {
+			'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+			},
+			'simple': {
+			'format': '%(levelname)s %(message)s'
+			},
+		},
+		'filters': {
+			'require_debug_true': {
+				'()': 'django.utils.log.RequireDebugTrue',
+			},
+		},
+		'handlers': {
+			'file': {
+				'level': 'DEBUG',
+				# 'class': 'logging.FileHandler',
+				# 'filename': os.path.join(BASE_DIR,'storage/debug.log'),
+				'class' : 'logging.handlers.TimedRotatingFileHandler',
+				'filename' : os.path.join(BASE_DIR,'debug.log'),
+				'when' : 'midnight',
+				'interval' : 1,
+				'backupCount': 0
+			},
+			'mail_admins': {
+				'level': 'ERROR',
+				'class': 'django.utils.log.AdminEmailHandler'
+			},
+			'console': {
+				'level': 'DEBUG',
+				'class': 'logging.StreamHandler',
+			},
+		},
+		'loggers': {
+			'django': {
+				'handlers': ['file','mail_admins'],
+				'level': 'ERROR',
+				'propagate': False,
+			},
+			'django.request': {
+				'handlers': ['file','mail_admins'],
+				'level': 'ERROR',
+				'propagate': False,
+			},
+			'django.db.backends': {
+				'handlers': ['file'],
+				'level': 'ERROR',
+			},
+			'xscape': {
+				'handlers': ['file',*['console']*DEBUG],
+				'level': 'DEBUG',
+			},
+		},
+	}

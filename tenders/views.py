@@ -62,8 +62,8 @@ def initiate_payment(request):
         print(access_token)
         host = request.get_host()
 
-        callback_url = 'http://{}{}'.format(host,
-                                           reverse('tenders:payment_push')),
+        callback_url = 'http://{}{}'.format(host, reverse('tenders:payment_push'))
+
         print(callback_url)
         
 
@@ -108,12 +108,14 @@ def initiate_payment(request):
             else:
                 return redirect('payment_fail')
         else:
-        
-         return render(request, 'payment/payment_error.html', {'error_message': 'HTTP Error: {}'.format(response.status_code)})
+         print(response)
+         return render(request, 'tenders/payment_error.html', {'error_message': 'HTTP Error: {}'.format(response.status_code)})
     return render(request, 'tenders/tenders_detail.html')
+
     
 @csrf_exempt
 def payment_push(request):
+   
     if request.method == 'POST':
         # Process the response data
         response_data = request.POST

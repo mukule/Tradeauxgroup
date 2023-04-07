@@ -111,7 +111,8 @@ def initiate_payment(request):
             response_json = response.json()
             print(response_json)
             if response_json["ResponseCode"] == "0":
-                return redirect('tenders:payment_push')
+                # return redirect('tenders:payment_push')
+                return redirect('tenders:payment_check')
             else:
                 return redirect('payment_fail')
         else:
@@ -119,7 +120,10 @@ def initiate_payment(request):
          return render(request, 'tenders/payment_error.html', {'error_message': 'HTTP Error: {}'.format(response.status_code)})
     return render(request, 'tenders/tenders_detail.html')
 
-    
+
+'''
+To serve mpesa callback ONLY!!!
+'''
 @csrf_exempt
 @api_view(['POST'])
 @parser_classes([JSONParser])
@@ -132,12 +136,17 @@ def payment_push(request):
         request.data ,
         status=status.HTTP_200_OK
     )
-    # if request.method == 'POST':
-    #     # Process the response data
-    #     response_data = request.POST
-    #     print(response_data)
-    #     RETURN
 
-    
-            # ...
-    # return render(request, 'tenders/payment_push.html')
+'''
+To serve payment check page
+'''
+@csrf_exempt
+def payment_check(request):
+    if request.method == 'POST':
+        # Process the response data
+        response_data = request.POST
+        print(response_data)
+        #RETURN
+        #    ...
+    return render(request, 'tenders/payment_push.html')
+

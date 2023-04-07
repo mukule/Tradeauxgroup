@@ -12,6 +12,7 @@ urlpatterns = [
     path('<int:pk>', tender_details.as_view(), name='tender_details'),
     path('initiate_payment', views.initiate_payment, name='initiate_payment'),
     path('payment_push', views.payment_push, name='payment_push'),
+    path('payment_check', views.payment_check, name='payment_check'),
     # path('payment_error', views.payment_error, name='payment_error'),
 ]
 if settings.DEBUG:

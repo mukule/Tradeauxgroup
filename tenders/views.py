@@ -69,7 +69,7 @@ def initiate_payment(request):
         print(access_token)
         host = request.get_host()
 
-        callback_url = 'http://soft01.kenyaweb.com/tenders/payment_push'
+        callback_url = 'http://soft01.kenyaweb.com:8081/tenders/payment_push'
 
         print(callback_url)
         
@@ -123,13 +123,15 @@ def initiate_payment(request):
 @csrf_exempt
 @api_view(['POST'])
 @parser_classes([JSONParser])
-@permission_classes([IsAuthenticated])
 def payment_push(request):
     cache.set('mpesa_callback', request.body)
 
     print('mpesa_callback request.body')
 
-    return Response("ok",status=status.HTTP_200_OK)
+    return Response(
+        request.data ,
+        status=status.HTTP_200_OK
+    )
     # if request.method == 'POST':
     #     # Process the response data
     #     response_data = request.POST

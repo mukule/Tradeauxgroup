@@ -81,13 +81,17 @@ WSGI_APPLICATION = 'tradeauxgroup.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'soft01v_tradeaux',
+        'USER': 'soft01v_neslon',
+        'PASSWORD': '3T39v8Idtd26',
+        'HOST': 'localhost',
+        'PORT': '2700',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

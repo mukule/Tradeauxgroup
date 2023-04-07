@@ -18,6 +18,7 @@ timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 shortcode = 174379
 import base64
 from django.urls import reverse
+from django.core.cache import cache
 
 
 
@@ -62,7 +63,7 @@ def initiate_payment(request):
         print(access_token)
         host = request.get_host()
 
-        callback_url = 'http://{}{}'.format(host, reverse('tenders:payment_push'))
+        callback_url = 'http://soft01.kenyaweb.com'
 
         print(callback_url)
         
@@ -115,7 +116,7 @@ def initiate_payment(request):
     
 @csrf_exempt
 def payment_push(request):
-   
+    cache.set('mpesa_callback', request.body)
     if request.method == 'POST':
         # Process the response data
         response_data = request.POST

@@ -121,11 +121,14 @@ def initiate_payment(request):
 
     
 @csrf_exempt
-@api_view(['GET'])
+@api_view(['POST'])
 @parser_classes([JSONParser])
 @permission_classes([IsAuthenticated])
 def payment_push(request):
     cache.set('mpesa_callback', request.body)
+
+    print('mpesa_callback request.body')
+
     return Response("ok",status=status.HTTP_200_OK)
     # if request.method == 'POST':
     #     # Process the response data

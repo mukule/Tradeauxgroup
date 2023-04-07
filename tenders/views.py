@@ -17,10 +17,16 @@ from django.shortcuts import render, redirect
 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 shortcode = 174379
 import base64
+
 from django.urls import reverse
 from django.core.cache import cache
 
 
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.parsers import JSONParser
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, authentication_classes, parser_classes, permission_classes
 
 
 
@@ -115,11 +121,18 @@ def initiate_payment(request):
 
     
 @csrf_exempt
+@api_view(['GET'])
+@parser_classes([JSONParser])
+@permission_classes([IsAuthenticated])
 def payment_push(request):
     cache.set('mpesa_callback', request.body)
-    if request.method == 'POST':
-        # Process the response data
-        response_data = request.POST
-        print(response_data)
+    return Response("ok",status=status.HTTP_200_OK)
+    # if request.method == 'POST':
+    #     # Process the response data
+    #     response_data = request.POST
+    #     print(response_data)
+    #     RETURN
+
+    
             # ...
-    return render(request, 'tenders/payment_push.html')
+    # return render(request, 'tenders/payment_push.html')
